@@ -1,4 +1,4 @@
-# project-exam-1
+# Project-Exam-1
 Project Exam 1 - Course Assignment
 
 This project is my submission for FED1 Project Exam 1.
