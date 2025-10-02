@@ -1,0 +1,34 @@
+body {
+  font-family: sans-serif;
+  padding: 20px;
+}
+#product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+.product-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+.product-card img {
+  max-width: 100%;
+  border-radius: 4px;
+}
+.product-card h2 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+.product-card p {
+  font-size: 1rem;
+  color: #555;
+}
+.product-card .price {
+  font-weight: bold;
+  color: #333;
+}
+.product-card .rating {
+  color: #f39c12;
+}
