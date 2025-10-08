@@ -11,32 +11,41 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
-  padding: 20px;
+  padding: 50px;
 }
+
 .product-card {
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 10px;
   text-align: center;
 }
+
 .product-card img {
   max-width: 100%;
   border-radius: 4px;
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
 }
+
 .product-card h2 {
   font-size: 1.2rem;
   margin: 10px 0;
 }
+
 .product-card p {
   font-size: 1rem;
   color: #333;
   font-family: 'Roboto', sans-serif;
 }
+
 .product-card .price {
   font-weight: bold;
   color: #333;
   font-family: 'Roboto', sans-serif;
 }
+
 .product-card .rating {
   color: #F9C1BC;
   font-weight: bold;
