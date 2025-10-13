@@ -1,57 +1,55 @@
 const API_URL = "https://v2.api.noroff.dev/online-shop";
+const slideContainer = document.getElementById("carousel-slide");
+let currentSlide = 0;
+let products = [];
 
+// Fetch products
 async function fetchProducts() {
   try {
-    const response = await fetch(API_URL);
-    if (!response.ok) {
-      throw new Error("Failed to fetch products");
-    }
+    const res = await fetch(API_URL);
+    if (!res.ok) throw new Error("Failed to fetch products");
+    const json = await res.json();
+    products = json.data;
 
-    const json = await response.json();
-    const products = json.data;
-
-    renderProducts(products);
+    renderCarousel(products);
+    startCarousel();
   } catch (error) {
-    console.error(error);
-    document.getElementById("product-grid").innerHTML =
-      "<p>Could not load products.</p>";
+    console.error("Error fetching products:", error);
+    slideContainer.innerHTML = "<p>Could not load products.</p>";
   }
 }
 
-function renderProducts(products) {
-  const grid = document.getElementById("product-grid");
-  grid.innerHTML = "";
+// Render carousel items
+function renderCarousel(items) {
+  slideContainer.innerHTML = "";
 
-  products.forEach(product => {
-    const card = document.createElement("div");
-    card.classList.add("product-card");
+  items.forEach((product, index) => {
+    const item = document.createElement("div");
+    item.classList.add("carousel-item");
+    if (index === 0) item.classList.add("active");
 
     const img = document.createElement("img");
-    img.src = product.image?.url || "https://via.placeholder.com/200x300?text=No+Image";
-    img.alt = product.image?.alt || "Product image";
+    img.src = product.image?.url || "https://via.placeholder.com/800x400?text=No+Image";
+    img.alt = product.image?.alt || product.title;
 
-    const title = document.createElement("h2");
-    title.textContent = product.title || "No title";
+    item.append(img);
+    item.addEventListener("click", () => {
+      window.location.href = `/product.html?id=${product.id}`;
+    });
 
-    const desc = document.createElement("p");
-    desc.textContent = product.description || "No description available";
-
-    const price = document.createElement("p");
-    price.classList.add("price");
-    price.textContent = `Price: $${product.price.toFixed(2)}`;
-
-    const rating = document.createElement("p");
-    rating.classList.add("rating");
-    rating.textContent = `Rating: ${product.rating || 0} / 5`;
-
-    card.appendChild(img);
-    card.appendChild(title);
-    card.appendChild(desc);
-    card.appendChild(price);
-    card.appendChild(rating);
-
-    grid.appendChild(card);
+    slideContainer.appendChild(item);
   });
+}
+
+// Start automatic slide
+function startCarousel() {
+  const slides = document.querySelectorAll(".carousel-item");
+
+  setInterval(() => {
+    slides[currentSlide].classList.remove("active");
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add("active");
+  }, 4000); 
 }
 
 fetchProducts();
