@@ -16,13 +16,40 @@ async function fetchProducts() {
 }
 
 function renderProducts(products) {
-  slideContainer.innerHTML = products.map(product => `
-    <div class="product-card">
-      <img src="${product.image.url}" alt="${product.title}">
-      <h3>${product.title}</h3>
-      <p>${product.price} NOK</p>
-    </div>
-  `).join('');
+  slideContainer.innerHTML = products.map(product => {
+    const hasDiscount = product.discountedPrice < product.price;
+    const discountPercent = Math.round(
+      ((product.price - product.discountedPrice) / product.price) * 100
+    );
+
+    return `
+      <div class="product-card" data-id="${product.id}">
+        ${hasDiscount ? `<div class="sale-badge">-${discountPercent}%</div>` : ""}
+        <img src="${product.image.url}" alt="${product.title}">
+        <h3>${product.title}</h3>
+        <div class="price">
+          ${
+            hasDiscount
+              ? `
+                <span class="old-price">${product.price.toFixed(2)} NOK</span>
+                <span class="discounted-price">${product.discountedPrice.toFixed(2)} NOK</span>
+              `
+              : `
+                <span class="normal-price">${product.price.toFixed(2)} NOK</span>
+              `
+          }
+        </div>
+      </div>
+    `;
+  }).join('');
+
+
+  document.querySelectorAll(".product-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const id = card.dataset.id;
+      window.location.href = `/singleproduct.html?id=${id}`;
+    });
+  });
 }
 
 fetchProducts();
