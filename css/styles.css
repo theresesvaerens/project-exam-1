@@ -1,86 +1,12 @@
 @import url(variables.css);
+@import url(product.css);
+@import url(singleproduct.css);
 
 body {
   font-family: 'Playfair Display', serif;
   background-color: #FFF9F4;
   margin: 0;
   padding: 0;
-}
-
-#product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 50px;
-}
-
-.product-card {
-  position: relative;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 15px;
-  text-align: center;
-  background: #F9C1BC;
-  transition: transform 0.2s ease;
-  cursor: pointer;
-}
-
-.product-card:hover {
-  transform: scale(1.02);
-}
-
-.product-card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.sale-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: #e63946;
-  color: white;
-  padding: 5px 10px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
-.product-card h3 {
-  font-size: 1.1rem;
-  margin: 10px 0;
-  font-family: 'Roboto', sans-serif;
-}
-
-.price {
-  margin-top: 5px;
-}
-
-.old-price {
-  text-decoration: line-through;
-  color: #888;
-  margin-right: 8px;
-}
-
-.discounted-price {
-  color: #333;
-  font-weight: bold;
-}
-
-.normal-price {
-  color: #333;
-  font-weight: bold;
-}
-
-.carousel-container {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  margin: 0px;
-  overflow: hidden;
-  margin-bottom: 20px;
 }
 
 .carousel-slide {
