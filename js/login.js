@@ -22,7 +22,7 @@ loginForm.addEventListener('submit', async (event) => {
     });
 
     if (!response.ok) {
-      throw new Error('Feil e-post eller passord');
+      throw new Error('Wrong email or password');
     }
 
     const data = await response.json();
