@@ -1,7 +1,7 @@
 const API_URL = "https://v2.api.noroff.dev/online-shop";
 const container = document.getElementById("single-product");
 
-// Get product ID from the URL
+
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
 
@@ -50,7 +50,8 @@ function renderProduct(product) {
       />
       <div class="product-details">
         <h1>${product.title}</h1>
-         <p class="description">${product.description || "No description available."}</p>
+        <p class="description">${product.description || "No description available."}</p>
+
         <div class="price">
           ${
             hasDiscount
@@ -59,9 +60,11 @@ function renderProduct(product) {
               : `<span class="normal-price">${product.price.toFixed(2)} NOK</span>`
           }
         </div>
+
         <div class="rating">
           ${getStars(product.rating)} <span>${product.rating.toFixed(1)}</span>
         </div>
+
         <button class="add-to-cart">Add to Cart</button>
       </div>
     </div>
@@ -69,6 +72,19 @@ function renderProduct(product) {
 
   const addBtn = container.querySelector(".add-to-cart");
   addBtn.addEventListener("click", () => {
-    alert(`${product.title} added to cart!`);
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+
+    const existingItem = cart.find(item => item.id === product.id);
+    if (existingItem) {
+      alert("This product is already in your cart!");
+      return;
+    }
+
+ 
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert(`${product.title} was added to your cart!`);
   });
 }
