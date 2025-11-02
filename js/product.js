@@ -17,8 +17,8 @@ async function fetchProduct(id) {
     if (!res.ok) throw new Error(`Failed to fetch product with ID: ${id}`);
 
     const json = await res.json();
-    const product = json.data; 
-    
+    const product = json.data;
+
     renderProduct(product);
   } catch (error) {
     console.error(error);
@@ -41,15 +41,16 @@ function getStars(rating) {
 
 function renderProduct(product) {
   const hasDiscount = product.discountedPrice < product.price;
-  const discountPercent = hasDiscount
-    ? Math.round(((product.price - product.discountedPrice) / product.price) * 100)
-    : 0;
 
   container.innerHTML = `
-    <div class="product-container">
-      <img src="${product.image?.url || "https://via.placeholder.com/400x400?text=No+Image"}" alt="${product.title}" class="product-image">
+    <div class="single-product-container">
+      <img 
+        src="${product.image?.url || "https://via.placeholder.com/400x400?text=No+Image"}" 
+        alt="${product.title}" 
+      />
       <div class="product-details">
         <h1>${product.title}</h1>
+         <p class="description">${product.description || "No description available."}</p>
         <div class="price">
           ${
             hasDiscount
@@ -61,7 +62,6 @@ function renderProduct(product) {
         <div class="rating">
           ${getStars(product.rating)} <span>${product.rating.toFixed(1)}</span>
         </div>
-        <p class="description">${product.description || "No description available."}</p>
         <button class="add-to-cart">Add to Cart</button>
       </div>
     </div>
