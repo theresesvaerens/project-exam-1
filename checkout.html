@@ -3,31 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/CSS/styles.css">
-  <link rel="stylesheet" href="/CSS/variables.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   <title>Checkout</title>
 </head>
 <body>
-  <header>
-    <header class="navbar">
-      <div class="logo">
-        <img src="/Assets/Images/HotView Labs Logo.svg" alt="Logo">
-        <a href="index.html"></a>
-      </div>
-      <nav class="nav-links">
-        <a href="/index.html">Home</a>
-        <a href="/product.html">Shop</a>
-        <a href="/account/login.html"><i class="fas fa-user"></i></a>
-        <a href="/cart.html"><i class="fas fa-shopping-cart"></i></a>
-      </nav>
-    </header>
+  <header class="navbar">
+    <div class="logo">
+      <a href="index.html"><img src="/Assets/HotView Labs Logo.svg" alt="Logo"></a>
+    </div>
+    <nav class="nav-links">
+      <a href="/account/login.html"><i class="fas fa-user"></i></a>
+      <a href="/cart.html"><i class="fas fa-shopping-cart"></i></a>
+    </nav>
   </header>
-  <main>
 
+  <main>
+    <section class="checkout-container">
+      <h1>Checkout</h1>
+      <form id="checkoutForm">
+        <h2>Shipping Address</h2>
+        <input type="text" id="fullname" placeholder="Full Name" required>
+        <input type="text" id="address" placeholder="Address" required>
+        <input type="text" id="city" placeholder="City" required>
+        <input type="text" id="zipcode" placeholder="Zip Code" required>
+        <input type="text" id="country" placeholder="Country" required>
+
+        <h2>Payment Details</h2>
+        <input type="text" id="cardnumber" placeholder="Card Number" required>
+        <input type="text" id="expiry" placeholder="Expiry (MM/YY)" required>
+        <input type="text" id="cvv" placeholder="CVV" required>
+
+        <p id="checkout-message" style="color:red;"></p>
+
+        <button type="submit">Place Order</button>
+      </form>
+    </section>
   </main>
- 
-  <footer>
+
+  <footer class="footer">
+    <div class="social-icons">
+      <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="#"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#"><i class="fa-brands fa-twitter"></i></a>
+      <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+    </div>
+    <p>&copy; 2025 Hot View Labs</p>
   </footer>
-  </body>
-  <script src="></script>
+
+  <script src="/js/checkout.js"></script>
+</body>
 </html>

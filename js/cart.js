@@ -52,17 +52,10 @@ function renderCart() {
 
 
 const checkoutBtn = document.getElementById("checkout-btn");
-if (checkoutBtn) {
-  checkoutBtn.addEventListener("click", () => {
-    if (cart.length === 0) return alert("Your cart is empty.");
-    if (confirm("Proceed to checkout? This will clear your cart.")) {
-      localStorage.removeItem("cart");
-      cart = [];
-      renderCart();
-      alert("Thank you for your purchase!");
-    }
-  });
-}
+checkoutBtn.addEventListener("click", () => {
+  // Redirect til checkout.html
+  window.location.href = "checkout.html";
+});
 
 
 renderCart();

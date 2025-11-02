@@ -1,0 +1,46 @@
+.checkout-container {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #FFF9F4;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .checkout-container h1,
+  .checkout-container h2 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .checkout-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .checkout-container input {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  .checkout-container button {
+    padding: 15px;
+    background-color: #F9C1BC;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .checkout-container button:hover {
+    background-color: #e0b0ab;
+  }
+  
