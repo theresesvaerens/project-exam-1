@@ -1,4 +1,4 @@
-const API_URL = 'https://v2.api.noroff.dev/online-shop/auth/login';
+const API_URL = 'https://v2.api.noroff.dev/auth/login';
 const loginForm = document.getElementById('login-form');
 const loginBtn = document.getElementById('login-btn');
 const errorMessage = document.getElementById('error-message');
