@@ -1,9 +1,11 @@
 h1 {
-  font-family: 'Playfair Display', serif;  
+  font-family: 'Karla', sans-serif;
+  font-weight: lighter;
 }
 
 p {
-font-family: 'Roboto', sans-serif;
+  font-family: 'Karla', sans-serif;
+  font-weight: lighter;
 }
 
 .navbar {

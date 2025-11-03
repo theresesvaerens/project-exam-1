@@ -1,17 +1,15 @@
 #product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 10px;
+    padding: 20px;
   }
   
   .product-card {
     position: relative;
-    border: 1px solid #ddd;
     border-radius: 10px;
     padding: 15px;
-    text-align: center;
-    background: #F9C1BC;
+    text-align: left;
     transition: transform 0.2s ease;
     cursor: pointer;
   }
@@ -22,7 +20,7 @@
   
   .product-card img {
     width: 100%;
-    height: 220px;
+    height: 350px;
     object-fit: cover;
     border-radius: 8px;
   }
@@ -46,6 +44,9 @@
   }
   
   .price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     margin-top: 5px;
   }
   
