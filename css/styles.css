@@ -20,6 +20,8 @@ body {
   height: 600px;
   margin-right: 20px;
   margin-left: 20px;
+  margin-bottom: 30px;
+  margin-top: 30px;
 }
 
 .carousel-item {
