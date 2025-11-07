@@ -19,28 +19,54 @@
     </nav>
   </header>
 
+
   <main>
-    <section class="checkout-container">
-      <h1>Checkout</h1>
-      <form id="checkoutForm">
-        <h2>Shipping Address</h2>
-        <input type="text" id="fullname" placeholder="Full Name" required>
-        <input type="text" id="address" placeholder="Address" required>
-        <input type="text" id="city" placeholder="City" required>
-        <input type="text" id="zipcode" placeholder="Zip Code" required>
-        <input type="text" id="country" placeholder="Country" required>
+  <section class="checkout-grid">
+    
+    
+    <form id="checkoutForm" class="checkout-left">
+      <h2>Delivery</h2>
 
-        <h2>Payment Details</h2>
-        <input type="text" id="cardnumber" placeholder="Card Number" required>
-        <input type="text" id="expiry" placeholder="Expiry (MM/YY)" required>
-        <input type="text" id="cvv" placeholder="CVV" required>
+      <input type="text" placeholder="Full name" required>
+      <input type="text" placeholder="Address" required>
 
-        <p id="checkout-message" style="color:red;"></p>
+      <div class="row">
+        <input type="text" placeholder="Postal code" required>
+        <input type="text" placeholder="City" required>
+      </div>
 
-        <button type="submit">Place Order</button>
-      </form>
-    </section>
-  </main>
+      <input type="text" placeholder="Country" required>
+
+      <h2>Payment</h2>
+
+      <div class="card-box">
+        <p>Card <span class="visa-badge">VISA</span></p>
+
+        <input type="text" placeholder="Cardnumber" required>
+
+        <div class="row">
+          <input type="text" placeholder="Expiration date" required>
+          <input type="text" placeholder="CVC" required>
+        </div>
+      </div>
+
+      <button type="submit" class="place-order">Place order</button>
+    </form>
+
+
+  
+    <div class="checkout-right">
+      <div id="checkout-items"></div>
+
+      <div class="checkout-total">
+        <span>Total</span>
+        <span id="checkout-total-price">0 NOK</span>
+      </div>
+    </div>
+
+  </section>
+</main>
+
 
   <footer class="footer">
     <div class="social-icons">

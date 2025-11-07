@@ -1,50 +1,103 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const checkoutForm = document.getElementById("checkoutForm");
-    const message = document.getElementById("checkout-message");
+  const checkoutItemsContainer = document.getElementById("checkout-items");
+  const totalPriceEl = document.getElementById("checkout-total-price");
+  const checkoutForm = document.getElementById("checkoutForm");
+  const message = document.getElementById("checkout-message");
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+
+  function displayCart() {
+    checkoutItemsContainer.innerHTML = "";
+    let total = 0;
   
-    checkoutForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+    if (!cart.length) {
+      checkoutItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+      totalPriceEl.textContent = "0 NOK";
+      return;
+    }
   
-      // Collect values
-      const fullname = document.getElementById("fullname").value.trim();
-      const address = document.getElementById("address").value.trim();
-      const city = document.getElementById("city").value.trim();
-      const zipcode = document.getElementById("zipcode").value.trim();
-      const country = document.getElementById("country").value.trim();
-      const cardnumber = document.getElementById("cardnumber").value.trim();
-      const expiry = document.getElementById("expiry").value.trim();
-      const cvv = document.getElementById("cvv").value.trim();
+    cart.forEach((item, index) => {
+      const title = item.title || "No title";
+      const quantity = item.quantity || 1;
+      const price = item.discountedPrice || item.price || 0;
+      const image = item.image?.url || 'https://via.placeholder.com/150';
   
-      // Simple validation
-      if (!fullname || !address || !city || !zipcode || !country ||
-          !cardnumber || !expiry || !cvv) {
-        message.textContent = "Please fill out all fields correctly.";
-        return;
-      }
+      const productTotal = price * quantity;
+      total += productTotal;
   
-      // Validate card number (simple 16-digit check)
-      if (!/^\d{16}$/.test(cardnumber.replace(/\s+/g, ""))) {
-        message.textContent = "Card number must be 16 digits.";
-        return;
-      }
-  
-      // Validate expiry (MM/YY)
-      if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) {
-        message.textContent = "Expiry must be in MM/YY format.";
-        return;
-      }
-  
-      // Validate CVV (3 digits)
-      if (!/^\d{3}$/.test(cvv)) {
-        message.textContent = "CVV must be 3 digits.";
-        return;
-      }
-  
-      // Clear cart in localStorage after successful validation
-      localStorage.removeItem("cart");
-  
-      // Redirect to success page
-      window.location.href = "success.html";
+      const itemEl = document.createElement("div");
+      itemEl.classList.add("checkout-item");
+      itemEl.innerHTML = `
+        <div class="image-wrapper" style="position: relative; display: inline-block;">
+          <img src="${image}" alt="${title}" style="display:block;">
+          <span class="quantity-badge" style="
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            background: #FFF9F4;
+            color: #333;
+            padding: 4px 8px;
+            border-radius: 50%;
+            font-size: 0.8rem;
+            font-weight: bold;
+          ">${quantity}</span>
+        </div>
+        <div class="item-info">
+        <p><strong>${title}</strong></p>
+        <p>Price per item: ${price.toFixed(2)} NOK</p>
+        <p><strong>Total: ${productTotal.toFixed(2)} NOK</strong></p>
+      </div>
+      `;
+      checkoutItemsContainer.appendChild(itemEl);
     });
-  });
   
+    totalPriceEl.textContent = `${total.toFixed(2)} NOK`;
+  
+    if (typeof addCartEventListeners === "function") {
+      addCartEventListeners();
+    }
+  }
+
+  displayCart();
+
+
+  checkoutForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const fullname = document.getElementById("fullname").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const zipcode = document.getElementById("zipcode").value.trim();
+    const country = document.getElementById("country").value.trim();
+    const cardnumber = document.getElementById("cardnumber").value.trim();
+    const expiry = document.getElementById("expiry").value.trim();
+    const cvv = document.getElementById("cvv").value.trim();
+
+    if (!fullname || !address || !city || !zipcode || !country ||
+        !cardnumber || !expiry || !cvv) {
+      message.textContent = "Please fill out all fields correctly.";
+      return;
+    }
+
+    if (!/^\d{16}$/.test(cardnumber.replace(/\s+/g, ""))) {
+      message.textContent = "Card number must be 16 digits.";
+      return;
+    }
+
+    if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) {
+      message.textContent = "Expiry must be in MM/YY format.";
+      return;
+    }
+
+
+    if (!/^\d{3}$/.test(cvv)) {
+      message.textContent = "CVV must be 3 digits.";
+      return;
+    }
+
+
+    localStorage.removeItem("cart");
+    window.location.href = "success.html";
+  });
+});
