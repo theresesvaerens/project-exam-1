@@ -6,31 +6,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-
   function displayCart() {
     checkoutItemsContainer.innerHTML = "";
     let total = 0;
-  
+
     if (!cart.length) {
       checkoutItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
       totalPriceEl.textContent = "0 NOK";
       return;
     }
-  
-    cart.forEach((item, index) => {
+
+    cart.forEach(item => {
       const title = item.title || "No title";
       const quantity = item.quantity || 1;
       const price = item.discountedPrice || item.price || 0;
       const image = item.image?.url || 'https://via.placeholder.com/150';
-  
       const productTotal = price * quantity;
+
       total += productTotal;
-  
+
       const itemEl = document.createElement("div");
       itemEl.classList.add("checkout-item");
       itemEl.innerHTML = `
         <div class="image-wrapper" style="position: relative; display: inline-block;">
-          <img src="${image}" alt="${title}" style="display:block;">
+          <img src="${image}" alt="${title}" style="display:block; width:60px; height:60px; border-radius:6px;">
           <span class="quantity-badge" style="
             position: absolute;
             top: -5px;
@@ -44,23 +43,18 @@ document.addEventListener("DOMContentLoaded", () => {
           ">${quantity}</span>
         </div>
         <div class="item-info">
-        <p><strong>${title}</strong></p>
-        <p>Price per item: ${price.toFixed(2)} NOK</p>
-        <p><strong>Total: ${productTotal.toFixed(2)} NOK</strong></p>
-      </div>
+          <p><strong>${title}</strong></p>
+          <p>Price per item: ${price.toFixed(2)} NOK</p>
+          <p><strong>Total: ${productTotal.toFixed(2)} NOK</strong></p>
+        </div>
       `;
       checkoutItemsContainer.appendChild(itemEl);
     });
-  
+
     totalPriceEl.textContent = `${total.toFixed(2)} NOK`;
-  
-    if (typeof addCartEventListeners === "function") {
-      addCartEventListeners();
-    }
   }
 
   displayCart();
-
 
   checkoutForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -74,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const expiry = document.getElementById("expiry").value.trim();
     const cvv = document.getElementById("cvv").value.trim();
 
+  
     if (!fullname || !address || !city || !zipcode || !country ||
         !cardnumber || !expiry || !cvv) {
       message.textContent = "Please fill out all fields correctly.";
@@ -89,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
       message.textContent = "Expiry must be in MM/YY format.";
       return;
     }
-
 
     if (!/^\d{3}$/.test(cvv)) {
       message.textContent = "CVV must be 3 digits.";
