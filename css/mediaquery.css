@@ -107,18 +107,17 @@
     .navbar {
       display: flex;
       justify-content: space-between;
-      padding: 15px 20px;
     }
   
     .nav-links {
       display: flex;
-      gap: 20px;
     }
   
 
     .headerimage img,
     .footerimage img {
       height: 280px;
+      width: 100%;
     }
   
 
