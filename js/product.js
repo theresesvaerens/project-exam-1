@@ -1,7 +1,6 @@
 const API_URL = "https://v2.api.noroff.dev/online-shop";
 const container = document.getElementById("single-product");
 
-
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
 
@@ -72,33 +71,20 @@ function renderProduct(product) {
 
   const addBtn = container.querySelector(".add-to-cart");
   addBtn.addEventListener("click", () => {
+
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-
     const existingItem = cart.find(item => item.id === product.id);
+
     if (existingItem) {
-      alert("This product is already in your cart!");
-      return;
+      existingItem.quantity = (existingItem.quantity || 1) + 1;
+    } else {
+      product.quantity = 1;
+      cart.push(product);
     }
 
- 
-    cart.push(product);
     localStorage.setItem("cart", JSON.stringify(cart));
 
-    alert(`${product.title} was added to your cart!`);
+    updateCartCount(); 
   });
 }
-
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-  const cartCountEl = document.getElementById("cart-count");
-
-  if (count > 0) {
-    cartCountEl.textContent = count;
-    cartCountEl.style.display = "inline-flex";
-  } else {
-    cartCountEl.style.display = "none";
-  }
-}
-updateCartCount();
