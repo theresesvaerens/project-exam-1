@@ -23,6 +23,11 @@ main {
   flex: 1;
 }
 
+.carousel-container h1,
+.product-container h1 {
+  text-align: center;
+}
+
 .carousel-slide {
   position: relative;
   height: 600px;
