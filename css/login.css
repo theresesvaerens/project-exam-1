@@ -1,77 +1,63 @@
 .login-container {
-    background: #F9C1BC;
-    padding: 30px 40px 40px 40px; 
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 600px;
-    text-align: left;
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    margin-left: 350px;
-    margin-bottom: 50px;
-    align-items: center;
-  }
-  
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  
-  form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
+  background: #F9C1BC;
+  padding: 30px 40px 40px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+  margin: 100px auto; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-  }
-  
-  .form-group label {
-    width: 100px; 
-    margin: 0;
-  }
-  
-  .form-group input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #FFF9F4;
-    width: 300px;
-  }
-  
 
-  button {
-    width: 300px;
-    padding: 10px;
-    background-color: #FFF9F4;
-    color: #F9C1BC;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 16px;
-    margin: 10px auto 0 auto; 
-    display: block;
-  }
-  
-  button:hover {
-    background-color: #333;
-    color: #FFF9F4;
-  }
-  
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 10px;
-    text-align: center;
-  }
+.form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #FFF9F4;
+  width: 100%; 
+}
+
+
+button {
+  width: 100%;
+  max-width: 300px; 
+  padding: 10px;
+  background-color: #FFF9F4;
+  color: #F9C1BC;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #333;
+  color: #FFF9F4;
+}
+
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
