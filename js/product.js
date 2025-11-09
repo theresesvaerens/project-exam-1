@@ -28,6 +28,8 @@ function renderProduct(product) {
   const hasDiscount = product.discountedPrice < product.price;
   const tags = product.tags?.length ? product.tags.join(", ") : "No tags";
 
+  const token = localStorage.getItem('accessToken');
+
   container.innerHTML = `
     <div class="single-product-container">
       <img src="${product.image?.url || 'https://via.placeholder.com/400x400?text=No+Image'}" alt="${product.title}" />
@@ -54,7 +56,11 @@ function renderProduct(product) {
           <strong>Tags:</strong> ${tags}
         </div>
 
-        <button class="add-to-cart">Add to Cart</button>
+        ${
+          token
+            ? `<button class="add-to-cart">Add to Cart</button>`
+            : `<a href="/account/login.html" class="login-to-cart">Log in to add items to your cart.</a>`
+        }
 
         <div class="reviews-section">
           <h2>Customer Reviews</h2>
@@ -64,27 +70,30 @@ function renderProduct(product) {
     </div>
   `;
 
-  const addBtn = container.querySelector(".add-to-cart");
-  addBtn.addEventListener("click", () => {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existingItem = cart.find(item => item.id === product.id);
+  if (token) {
+    const addBtn = container.querySelector(".add-to-cart");
+    if (addBtn) {
+      addBtn.addEventListener("click", () => {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const existingItem = cart.find(item => item.id === product.id);
 
-    if (existingItem) {
-      existingItem.quantity = (existingItem.quantity || 1) + 1;
-    } else {
-      product.quantity = 1;
-      cart.push(product);
+        if (existingItem) {
+          existingItem.quantity = (existingItem.quantity || 1) + 1;
+        } else {
+          product.quantity = 1;
+          cart.push(product);
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCount();
+        alert("Added to cart!");
+      });
     }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateCartCount();
-  });
+  }
 }
 
 function renderReviews(reviews) {
-  if (!reviews || reviews.length === 0) {
-    return "<p>No reviews yet.</p>";
-  }
+  if (!reviews || reviews.length === 0) return "<p>No reviews yet.</p>";
 
   return reviews.map(review => `
     <div class="review">
@@ -98,9 +107,11 @@ function updateCartCount() {
   const cartCount = document.getElementById("cart-count");
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const totalQuantity = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+
   if (cartCount) {
     cartCount.textContent = totalQuantity;
     cartCount.style.display = totalQuantity > 0 ? "inline-block" : "none";
   }
 }
 
+updateCartCount();

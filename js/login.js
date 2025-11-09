@@ -15,22 +15,17 @@ loginForm.addEventListener('submit', async (event) => {
   try {
     const response = await fetch(API_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
 
-    if (!response.ok) {
-      throw new Error('Wrong email or password');
-    }
+    if (!response.ok) throw new Error('Wrong email or password');
 
     const data = await response.json();
     const { accessToken } = data.data;
 
 
-    sessionStorage.setItem('accessToken', accessToken);
-
+    localStorage.setItem('accessToken', accessToken);
 
     window.location.href = '../index.html';
   } catch (error) {
