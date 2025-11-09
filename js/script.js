@@ -5,7 +5,6 @@ const prevBtn = document.getElementById("carousel-prev");
 const nextBtn = document.getElementById("carousel-next");
 let currentSlide = 0;
 
-
 const carouselItems = [
   { image: "assets/images/fashionable-model-stylish-hat-red-coat-boots-posing-white-wall-studio.jpg", productId: "5391e16f-d88b-4747-a989-f17fb178459d" },
   { image: "assets/images/black-woman-trench-coat-dancing-sunlight.jpg", productId: "f7bdd538-3914-409d-bd71-8ef962a9a9dd" },
@@ -26,13 +25,8 @@ function renderCarouselSlide(index) {
   const img = carouselContainer.querySelector(".carousel-image");
   const btn = carouselContainer.querySelector(".carousel-shop-btn");
 
-
-  img.addEventListener("click", () => {
-    window.location.href = `/product.html?id=${item.productId}`;
-  });
-  btn.addEventListener("click", () => {
-    window.location.href = `/product.html?id=${item.productId}`;
-  });
+  img.addEventListener("click", () => window.location.href = `/product.html?id=${item.productId}`);
+  btn.addEventListener("click", () => window.location.href = `/product.html?id=${item.productId}`);
 }
 
 function preloadImage(index) {
@@ -63,64 +57,41 @@ const productGrid = document.getElementById("product-grid");
 async function fetchGridProducts() {
   try {
     const res = await fetch(API_URL);
-    if (!res.ok) throw new Error("Failed to fetch grid products");
+    if (!res.ok) throw new Error("Failed to fetch products");
 
     const json = await res.json();
     const products = json.data;
     renderProducts(products);
   } catch (error) {
-    console.error("Error fetching grid:", error);
-    if (productGrid)
-      productGrid.innerHTML = "<p>Could not load products.</p>";
+    console.error("Error fetching products:", error);
+    if (productGrid) productGrid.innerHTML = "<p>Could not load products.</p>";
   }
 }
 
 function renderProducts(products) {
   if (!productGrid) return;
 
-  productGrid.innerHTML = products
-    .map((product) => {
-      const hasDiscount = product.discountedPrice < product.price;
-      const discountPercent = hasDiscount
-        ? Math.round(
-            ((product.price - product.discountedPrice) / product.price) * 100
-          )
-        : 0;
+  productGrid.innerHTML = products.map(product => {
+    const hasDiscount = product.discountedPrice < product.price;
+    const discountPercent = hasDiscount ? Math.round(((product.price - product.discountedPrice) / product.price) * 100) : 0;
 
-      return `
-        <div class="product-card" data-id="${product.id || product._id}">
-          ${
-            hasDiscount
-              ? `<div class="sale-badge">-${discountPercent}%</div>`
-              : ""
+    return `
+      <div class="product-card" data-id="${product.id || product._id}">
+        ${hasDiscount ? `<div class="sale-badge">-${discountPercent}%</div>` : ""}
+        <img src="${product.image?.url || "https://via.placeholder.com/300x300?text=No+Image"}" alt="${product.title}" loading="lazy">
+        <h3>${product.title}</h3>
+        <div class="price">
+          ${hasDiscount 
+            ? `<span class="old-price">${product.price.toFixed(2)} NOK</span>
+               <span class="discounted-price">${product.discountedPrice.toFixed(2)} NOK</span>`
+            : `<span class="normal-price">${product.price.toFixed(2)} NOK</span>`
           }
-          <img 
-            src="${
-              product.image?.url ||
-              "https://via.placeholder.com/300x300?text=No+Image"
-            }" 
-            alt="${product.title}" 
-            loading="lazy"
-          >
-          <h3>${product.title}</h3>
-          <div class="price">
-            ${
-              hasDiscount
-                ? `
-                  <span class="old-price">${product.price.toFixed(2)} NOK</span>
-                  <span class="discounted-price">${product.discountedPrice.toFixed(2)} NOK</span>
-                `
-                : `<span class="normal-price">${product.price.toFixed(
-                    2
-                  )} NOK</span>`
-            }
-          </div>
         </div>
-      `;
-    })
-    .join("");
+      </div>
+    `;
+  }).join("");
 
-  document.querySelectorAll(".product-card").forEach((card) => {
+  document.querySelectorAll(".product-card").forEach(card => {
     card.addEventListener("click", () => {
       const id = card.dataset.id;
       window.location.href = `/product.html?id=${id}`;
@@ -129,3 +100,51 @@ function renderProducts(products) {
 }
 
 fetchGridProducts();
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const cartCountEl = document.getElementById("cart-count");
+
+  if (!cartCountEl) return;
+
+  if (count > 0) {
+    cartCountEl.textContent = count;
+    cartCountEl.style.display = "inline-flex";
+  } else {
+    cartCountEl.style.display = "none";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartCount();
+  const token = localStorage.getItem('accessToken');
+
+  const loginIcon = document.querySelector('.nav-links a[href="/account/login.html"]');
+  const cartLink = document.querySelector('.nav-links a[href="/cart.html"]');
+  
+  let logoutBtn = document.getElementById('logout-btn');
+  if (!logoutBtn && cartLink) {
+    logoutBtn = document.createElement('button');
+    logoutBtn.id = 'logout-btn';
+    logoutBtn.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket"></i>';
+    cartLink.after(logoutBtn);
+  }
+
+  if (token) {
+    if (loginIcon) loginIcon.style.display = 'none';
+    if (logoutBtn) logoutBtn.style.display = 'inline-flex';
+  } else {
+    if (loginIcon) loginIcon.style.display = 'inline';
+    if (logoutBtn) logoutBtn.style.display = 'none';
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('cart');
+      updateCartCount();
+      window.location.href = '/index.html';
+    });
+  }
+});
