@@ -117,29 +117,11 @@ main {
   to { opacity: 1; transform: scale(1); }
 }
 
-.news {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  padding: 40px 20px;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.news img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 10px;
-  display: block;
-}
 
 .footerimage {
   position: relative;
   display: inline-block;
   width: 100%;
-  margin-bottom: 0px;
 }
 
 .footerimage img {
@@ -148,7 +130,6 @@ main {
   object-fit: cover;
   display: block;
 }
-
 
 .cart-icon {
   position: relative;
