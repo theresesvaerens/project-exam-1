@@ -1,67 +1,57 @@
-// === BASE URL ===
-const API_URL = "https://v2.api.noroff.dev/online-shop";
+const API_URL = `https://v2.api.noroff.dev/online-shop/`;
 
-// === CAROUSEL ===
 const carouselContainer = document.getElementById("carousel-slide");
+const prevBtn = document.getElementById("carousel-prev");
+const nextBtn = document.getElementById("carousel-next");
 let currentSlide = 0;
 
-// Fetch products for the homepage carousel
-async function fetchCarouselProducts() {
-  try {
-    const res = await fetch(API_URL);
-    if (!res.ok) throw new Error("Failed to fetch carousel products");
 
-    const json = await res.json();
-    const products = json.data.slice(0, 5); // Show only the first 5 products
-    renderCarousel(products);
-    startCarousel();
-  } catch (error) {
-    console.error("Error fetching carousel:", error);
-    if (carouselContainer)
-      carouselContainer.innerHTML = "<p>Could not load carousel.</p>";
-  }
-}
+const carouselItems = [
+  { image: "assets/images/fashionable-model-stylish-hat-red-coat-boots-posing-white-wall-studio.jpg", productId: "5391e16f-d88b-4747-a989-f17fb178459d" },
+  { image: "assets/images/black-woman-trench-coat-dancing-sunlight.jpg", productId: "f7bdd538-3914-409d-bd71-8ef962a9a9dd" },
+  { image: "assets/images/attractive-young-woman-walking-autumn-wearing-coat.jpg", productId: "7238397e-0ee5-4d5c-9e82-bda666dd2470" }
+];
 
-// Create carousel slides dynamically
-function renderCarousel(products) {
-  if (!carouselContainer) return;
-  carouselContainer.innerHTML = "";
+function renderCarouselSlide(index) {
+  const item = carouselItems[index];
+  if (!item) return;
 
-  products.forEach((product, index) => {
-    const item = document.createElement("div");
-    item.classList.add("carousel-item");
-    if (index === 0) item.classList.add("active");
+  carouselContainer.innerHTML = `
+    <div class="carousel-item fade-in">
+      <img src="${item.image}" class="carousel-image" alt="Produktbilde" loading="lazy">
+      <button class="carousel-shop-btn">Shop product</button>
+    </div>
+  `;
 
-    const img = document.createElement("img");
-    img.src = product.image?.url || "https://via.placeholder.com/800x400?text=No+Image";
-    img.alt = product.image?.alt || product.title;
+  const img = carouselContainer.querySelector(".carousel-image");
+  const btn = carouselContainer.querySelector(".carousel-shop-btn");
 
-    item.append(img);
-    item.addEventListener("click", () => {
-      // Redirect to single product page when clicked
-      window.location.href = `/product.html?id=${product.id}`;
-    });
 
-    carouselContainer.appendChild(item);
+  img.addEventListener("click", () => {
+    window.location.href = `/product.html?id=${item.productId}`;
+  });
+  btn.addEventListener("click", () => {
+    window.location.href = `/product.html?id=${item.productId}`;
   });
 }
 
-// Start automatic carousel rotation
-function startCarousel() {
-  const slides = document.querySelectorAll(".carousel-item");
-  if (slides.length === 0) return;
-
-  setInterval(() => {
-    slides[currentSlide].classList.remove("active");
-    currentSlide = (currentSlide + 1) % slides.length;
-    slides[currentSlide].classList.add("active");
-  }, 4000); // Change slide every 4 seconds
+function showNextSlide() {
+  currentSlide = (currentSlide + 1) % carouselItems.length;
+  renderCarouselSlide(currentSlide);
 }
 
-// === PRODUCT GRID ===
+function showPrevSlide() {
+  currentSlide = (currentSlide - 1 + carouselItems.length) % carouselItems.length;
+  renderCarouselSlide(currentSlide);
+}
+
+if (nextBtn) nextBtn.addEventListener("click", showNextSlide);
+if (prevBtn) prevBtn.addEventListener("click", showPrevSlide);
+
+renderCarouselSlide(currentSlide);
+
 const productGrid = document.getElementById("product-grid");
 
-// Fetch products for the product grid
 async function fetchGridProducts() {
   try {
     const res = await fetch(API_URL);
@@ -77,37 +67,52 @@ async function fetchGridProducts() {
   }
 }
 
-// Render all products inside the grid
 function renderProducts(products) {
   if (!productGrid) return;
 
-  productGrid.innerHTML = products.map(product => {
-    const hasDiscount = product.discountedPrice < product.price;
-    const discountPercent = hasDiscount
-      ? Math.round(((product.price - product.discountedPrice) / product.price) * 100)
-      : 0;
+  productGrid.innerHTML = products
+    .map((product) => {
+      const hasDiscount = product.discountedPrice < product.price;
+      const discountPercent = hasDiscount
+        ? Math.round(
+            ((product.price - product.discountedPrice) / product.price) * 100
+          )
+        : 0;
 
-    return `
-      <div class="product-card" data-id="${product.id}">
-        ${hasDiscount ? `<div class="sale-badge">-${discountPercent}%</div>` : ""}
-        <img src="${product.image?.url || "https://via.placeholder.com/300x300?text=No+Image"}" alt="${product.title}">
-        <h3>${product.title}</h3>
-        <div class="price">
+      return `
+        <div class="product-card" data-id="${product.id || product._id}">
           ${
             hasDiscount
-              ? `
-                <span class="old-price">${product.price.toFixed(2)} NOK</span>
-                <span class="discounted-price">${product.discountedPrice.toFixed(2)} NOK</span>
-              `
-              : `<span class="normal-price">${product.price.toFixed(2)} NOK</span>`
+              ? `<div class="sale-badge">-${discountPercent}%</div>`
+              : ""
           }
+          <img 
+            src="${
+              product.image?.url ||
+              "https://via.placeholder.com/300x300?text=No+Image"
+            }" 
+            alt="${product.title}" 
+            loading="lazy"
+          >
+          <h3>${product.title}</h3>
+          <div class="price">
+            ${
+              hasDiscount
+                ? `
+                  <span class="old-price">${product.price.toFixed(2)} NOK</span>
+                  <span class="discounted-price">${product.discountedPrice.toFixed(2)} NOK</span>
+                `
+                : `<span class="normal-price">${product.price.toFixed(
+                    2
+                  )} NOK</span>`
+            }
+          </div>
         </div>
-      </div>
-    `;
-  }).join('');
+      `;
+    })
+    .join("");
 
-  // Add click event to each product card → open product.html with ID
-  document.querySelectorAll(".product-card").forEach(card => {
+  document.querySelectorAll(".product-card").forEach((card) => {
     card.addEventListener("click", () => {
       const id = card.dataset.id;
       window.location.href = `/product.html?id=${id}`;
@@ -115,8 +120,4 @@ function renderProducts(products) {
   });
 }
 
-// === INITIALIZE ===
-fetchCarouselProducts();
 fetchGridProducts();
-
-

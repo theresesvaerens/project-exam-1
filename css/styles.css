@@ -8,6 +8,7 @@
 @import url(success.css);
 @import url(mediaquery.css);
 
+
 body {
   font-family: 'Karla', sans-serif;
   background-color: #FFF9F4;
@@ -23,39 +24,97 @@ main {
   flex: 1;
 }
 
-.carousel-container h1,
-.product-container h1 {
-  text-align: center;
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #F9C1BC;
 }
 
 .carousel-slide {
+  width: 100%;
+  height: 100%;
   position: relative;
-  height: 600px;
-  margin-right: 20px;
-  margin-left: 20px;
-  margin-bottom: 30px;
-  margin-top: 30px;
 }
 
 .carousel-item {
   position: absolute;
-  inset: 0; 
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
-
-.carousel-item.active {
-  opacity: 1;
-}
-
-.carousel-item img {
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  text-align: center;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
+  cursor: pointer;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.8);
   border: none;
-  border-radius: 0;
-  box-shadow: none;
+  font-size: 2rem;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+#carousel-prev {
+  left: 50px;
+}
+
+#carousel-next {
+  right: 50px;
+}
+
+.carousel-btn:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.carousel-shop-btn {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 35px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #FF6B6B;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.carousel-shop-btn:hover {
+  background-color: #FF5252;
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+
+.fade-in {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .news {
@@ -76,20 +135,20 @@ main {
   display: block;
 }
 
-.headerimage {
-  position: relative; 
+.footerimage {
+  position: relative;
   display: inline-block;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 
-.headerimage img,
 .footerimage img {
   width: 100%;
   height: 700px;
   object-fit: cover;
   display: block;
 }
+
 
 .cart-icon {
   position: relative;
@@ -106,3 +165,5 @@ main {
   text-align: center;
   display: none;
 }
+
+
