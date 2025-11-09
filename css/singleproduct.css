@@ -40,7 +40,7 @@
   gap: 4px;
 }
 
-.price .normal-price {
+.single-product-container .price .normal-price {
   font-size: 30px;
   font-weight: 600;
   color: #111;
