@@ -145,4 +145,9 @@ main {
   display: none;
 }
 
-
+.register p a, 
+.login-container p a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
