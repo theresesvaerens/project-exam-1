@@ -99,6 +99,14 @@
 
 @media (max-width: 768px) {
 
+  #carousel-prev {
+    left: 10px;          
+  }
+
+  #carousel-next {
+    right: 10px;        
+  }
+
   .footerimage img {
     height: 280px;
   }

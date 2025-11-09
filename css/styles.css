@@ -62,12 +62,14 @@ main {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.8);
+  background: #F9C1BC;
+  color: #333;
   border: none;
   font-size: 2rem;
   padding: 5px;
   cursor: pointer;
   z-index: 10;
+  max-width: 50px;
 }
 
 #carousel-prev {
@@ -79,7 +81,8 @@ main {
 }
 
 .carousel-btn:hover {
-  background: rgba(255, 255, 255, 1);
+  color: #F9C1BC;
+  background-color: #333;
 }
 
 .carousel-shop-btn {
@@ -90,8 +93,8 @@ main {
   padding: 15px 35px;
   font-size: 1.2rem;
   font-weight: 600;
-  color: #fff;
-  background-color: #FF6B6B;
+  color: #333;
+  background-color: #F9C1BC;
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -102,7 +105,8 @@ main {
 }
 
 .carousel-shop-btn:hover {
-  background-color: #FF5252;
+  background-color: #333;
+  color: #F9C1BC;
   transform: translateX(-50%) translateY(-2px);
   box-shadow: 0 6px 20px rgba(0,0,0,0.25);
 }
