@@ -40,6 +40,12 @@
   gap: 4px;
 }
 
+.price .normal-price {
+  font-size: 30px;
+  font-weight: 600;
+  color: #111;
+}
+
 .product-details .old-price {
   text-decoration: line-through;
   color: #888;
@@ -50,11 +56,6 @@
   color: #D97B66;
   font-weight: bold;
   font-size: 30px;
-}
-
-.product-details .rating {
-  color: #f5b301;
-  font-size: 1.2rem;
 }
 
 .product-details p.description {
