@@ -35,14 +35,22 @@ function renderCarouselSlide(index) {
   });
 }
 
+function preloadImage(index) {
+  const nextIndex = (index + 1) % carouselItems.length;
+  const nextImage = new Image();
+  nextImage.src = carouselItems[nextIndex].image;
+}
+
 function showNextSlide() {
   currentSlide = (currentSlide + 1) % carouselItems.length;
   renderCarouselSlide(currentSlide);
+  preloadImage(currentSlide);
 }
 
 function showPrevSlide() {
   currentSlide = (currentSlide - 1 + carouselItems.length) % carouselItems.length;
   renderCarouselSlide(currentSlide);
+  preloadImage(currentSlide);
 }
 
 if (nextBtn) nextBtn.addEventListener("click", showNextSlide);
