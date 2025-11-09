@@ -80,7 +80,8 @@
 }
 
 .place-order:hover {
-  background: #e9a8a5;
+  background: #333;
+  color: #F9C1BC;
 }
 
 .checkout-right {
