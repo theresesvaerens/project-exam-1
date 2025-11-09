@@ -32,7 +32,7 @@ loginForm.addEventListener('submit', async (event) => {
     sessionStorage.setItem('accessToken', accessToken);
 
 
-    window.location.href = 'dashboard.html';
+    window.location.href = '../index.html';
   } catch (error) {
     errorMessage.textContent = error.message;
   } finally {

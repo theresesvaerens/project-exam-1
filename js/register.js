@@ -20,16 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-
       const res = await fetch(API_BASE, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          confirmPassword: password,
-        }),
+        body: JSON.stringify({ name, email, password }),
       });
 
       const data = await res.json();
@@ -41,7 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
         registerForm.reset();
       } else {
         message.textContent =
-          data.errors?.[0]?.message || data.message || "Registration failed.";
+          data.errors?.map(e => e.message).join(", ") ||
+          data.message ||
+          "Registration failed.";
         message.style.color = "red";
       }
     } catch (error) {
@@ -51,4 +47,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 
