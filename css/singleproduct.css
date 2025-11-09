@@ -75,7 +75,8 @@
 }
 
 .add-to-cart:hover {
-  background-color: #e0b0ab;
+  background-color: #333;
+  color: #F9C1BC;
 }
 
 .reviews-section {

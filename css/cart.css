@@ -126,7 +126,7 @@
 #checkout-btn {
   width: 100%;
   margin-top: 25px;
-  background: #F8C0BE;
+  background: #F9C1BC;
   color: #333;
   border: none;
   padding: 12px 25px;
@@ -137,5 +137,6 @@
 }
 
 #checkout-btn:hover {
-  background: #e3a7a5;
+  background: #333;
+  color: #F9C1BC;
 }
