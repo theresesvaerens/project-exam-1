@@ -17,7 +17,6 @@ async function fetchProduct(id) {
 
     const json = await res.json();
     const product = json.data;
-
     renderProduct(product);
   } catch (error) {
     console.error(error);
@@ -25,28 +24,14 @@ async function fetchProduct(id) {
   }
 }
 
-function getStars(rating) {
-  const fullStars = Math.floor(rating);
-  const halfStar = rating % 1 >= 0.5;
-  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-
-  let starsHTML = "";
-  for (let i = 0; i < fullStars; i++) starsHTML += `<i class="fa-solid fa-star"></i>`;
-  if (halfStar) starsHTML += `<i class="fa-solid fa-star-half-stroke"></i>`;
-  for (let i = 0; i < emptyStars; i++) starsHTML += `<i class="fa-regular fa-star"></i>`;
-
-  return starsHTML;
-}
-
 function renderProduct(product) {
   const hasDiscount = product.discountedPrice < product.price;
+  const tags = product.tags?.length ? product.tags.join(", ") : "No tags";
 
   container.innerHTML = `
     <div class="single-product-container">
-      <img 
-        src="${product.image?.url || "https://via.placeholder.com/400x400?text=No+Image"}" 
-        alt="${product.title}" 
-      />
+      <img src="${product.image?.url || 'https://via.placeholder.com/400x400?text=No+Image'}" alt="${product.title}" />
+
       <div class="product-details">
         <h1>${product.title}</h1>
         <p class="description">${product.description || "No description available."}</p>
@@ -60,20 +45,28 @@ function renderProduct(product) {
           }
         </div>
 
-        <div class="rating">
-          ${getStars(product.rating)} <span>${product.rating.toFixed(1)}</span>
+        <div class="rating-reviews">
+          <span>Rating: ${product.rating.toFixed(1)}</span> | 
+          <span>${product.reviews?.length || 0} review${(product.reviews?.length || 0) !== 1 ? "s" : ""}</span>
+        </div>
+
+        <div class="tags">
+          <strong>Tags:</strong> ${tags}
         </div>
 
         <button class="add-to-cart">Add to Cart</button>
+
+        <div class="reviews-section">
+          <h2>Customer Reviews</h2>
+          ${renderReviews(product.reviews)}
+        </div>
       </div>
     </div>
   `;
 
   const addBtn = container.querySelector(".add-to-cart");
   addBtn.addEventListener("click", () => {
-
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
     const existingItem = cart.find(item => item.id === product.id);
 
     if (existingItem) {
@@ -84,7 +77,30 @@ function renderProduct(product) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-
-    updateCartCount(); 
+    updateCartCount();
   });
 }
+
+function renderReviews(reviews) {
+  if (!reviews || reviews.length === 0) {
+    return "<p>No reviews yet.</p>";
+  }
+
+  return reviews.map(review => `
+    <div class="review">
+      <p><strong>${review.username}</strong> - Rating: ${review.rating}</p>
+      <p>${review.description}</p>
+    </div>
+  `).join("");
+}
+
+function updateCartCount() {
+  const cartCount = document.getElementById("cart-count");
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const totalQuantity = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  if (cartCount) {
+    cartCount.textContent = totalQuantity;
+    cartCount.style.display = totalQuantity > 0 ? "inline-block" : "none";
+  }
+}
+

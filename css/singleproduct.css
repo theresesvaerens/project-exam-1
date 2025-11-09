@@ -77,3 +77,27 @@
 .add-to-cart:hover {
   background-color: #e0b0ab;
 }
+
+.reviews-section {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.reviews-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.review {
+  border-top: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.review:first-child {
+  border-top: none;
+}
+
+.review p {
+  margin: 5px 0;
+  line-height: 1.4;
+}
